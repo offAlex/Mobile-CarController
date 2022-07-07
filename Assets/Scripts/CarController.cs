@@ -112,4 +112,10 @@ public class CarController : MonoBehaviour
     {
         pressed = false;
     }
+
+
+    public void Restart()
+    {   
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
