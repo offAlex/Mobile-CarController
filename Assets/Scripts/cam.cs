@@ -5,6 +5,7 @@ using UnityEngine;
 public class cam : MonoBehaviour
 {   
     public Camera _camera;
+    public Canvas _canvas;
     [SerializeField] private Transform _player;
  
     /// <summary>
@@ -15,5 +16,6 @@ public class cam : MonoBehaviour
     {   
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         _camera.transform.SetParent(_player.transform);
+        _canvas.transform.SetParent(_player.transform);
     }
 }

@@ -14,6 +14,9 @@ public class CarController : MonoBehaviour
     private float currentbreakForce;
     private bool isBreaking;
 
+    public FixedJoystick joysctickHorizontal;
+    public FixedJoystick joysctickVetrical;
+
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
     [SerializeField] private float maxSteerAngle;
@@ -39,8 +42,8 @@ public class CarController : MonoBehaviour
 
     private void GetInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = joysctickHorizontal.Horizontal;
+        verticalInput = joysctickVetrical.Vertical;
         isBreaking = Input.GetKey(KeyCode.Space);
     }
 
