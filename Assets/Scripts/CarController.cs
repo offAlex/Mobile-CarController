@@ -31,12 +31,19 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform;
     [SerializeField] private Transform rearRightWheelTransform;
 
+    private bool pressed = false;
+
     private void FixedUpdate()
     {
         GetInput();
         HandleMotor();
         HandleSteering();
         UpdateWheels();
+        if (pressed) 
+        {   
+            currentbreakForce = 3000f;
+            ApplyBreaking();
+        }
     }
 
 
@@ -94,5 +101,15 @@ public class CarController : MonoBehaviour
             Debug.Log("Finish");
             SceneManager.LoadScene("Menu");
         }
+    }
+
+     public void onDown()
+    {
+        pressed = true;
+    }
+
+    public void onUp()
+    {
+        pressed = false;
     }
 }
