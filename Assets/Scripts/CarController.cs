@@ -15,7 +15,6 @@ public class CarController : MonoBehaviour
     private bool isBreaking;
 
     public FixedJoystick joysctickHorizontal;
-    public FixedJoystick joysctickVetrical;
 
     [SerializeField] private float motorForce;
     [SerializeField] private float breakForce;
@@ -31,18 +30,35 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform;
     [SerializeField] private Transform rearRightWheelTransform;
 
-    private bool pressed = false;
+    private bool pressedHandbrake = false;
+    private bool pressedGas = false;
+    private bool pressedGasBack = false;
 
     private void FixedUpdate()
     {
         GetInput();
-        HandleMotor();
         HandleSteering();
         UpdateWheels();
-        if (pressed) 
+        if (pressedHandbrake) 
         {   
             currentbreakForce = 3000f;
             ApplyBreaking();
+        }
+
+        if (pressedGas) 
+        {   
+            frontLeftWheelCollider.motorTorque = motorForce;
+            frontRightWheelCollider.motorTorque =  motorForce;
+            currentbreakForce = isBreaking ? breakForce : 0f;
+            ApplyBreaking();   
+        }
+
+        if (pressedGasBack) 
+        {   
+            frontLeftWheelCollider.motorTorque = -motorForce;
+            frontRightWheelCollider.motorTorque =  -motorForce;
+            currentbreakForce = isBreaking ? breakForce : 0f;
+            ApplyBreaking();   
         }
     }
 
@@ -50,16 +66,7 @@ public class CarController : MonoBehaviour
     private void GetInput()
     {
         horizontalInput = joysctickHorizontal.Horizontal;
-        verticalInput = joysctickVetrical.Vertical;
         isBreaking = Input.GetKey(KeyCode.Space);
-    }
-
-    private void HandleMotor()
-    {
-        frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput * motorForce;
-        currentbreakForce = isBreaking ? breakForce : 0f;
-        ApplyBreaking();       
     }
 
     private void ApplyBreaking()
@@ -103,14 +110,34 @@ public class CarController : MonoBehaviour
         }
     }
 
-     public void onDown()
+     public void onDownHandbrake()
     {
-        pressed = true;
+        pressedHandbrake = true;
     }
 
-    public void onUp()
+    public void onUpHandbrake()
     {
-        pressed = false;
+        pressedHandbrake = false;
+    }
+
+    public void onDownGas()
+    {
+        pressedGas = true;
+    }
+
+    public void onUpGas()
+    {
+        pressedGas = false;
+    }
+
+    public void onDownGasBack()
+    {
+        pressedGasBack = true;
+    }
+
+    public void onUpGasBack()
+    {
+        pressedGasBack = false;
     }
 
 
