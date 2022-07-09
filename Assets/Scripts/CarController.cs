@@ -60,6 +60,13 @@ public class CarController : MonoBehaviour
             currentbreakForce = isBreaking ? breakForce : 0f;
             ApplyBreaking();   
         }
+        else if (!pressedGasBack && !pressedGas && !pressedHandbrake)
+        {
+            frontLeftWheelCollider.motorTorque = 0;
+            frontRightWheelCollider.motorTorque =  0;
+            currentbreakForce = isBreaking ? breakForce : 0f;
+            ApplyBreaking(); 
+        }
     }
 
 
